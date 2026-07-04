@@ -1,0 +1,55 @@
+<Window
+    x:Class="CanvasClient.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:canvas="using:CanvasClient.Canvas"
+    Title="Canvas Client — demo bảng vẽ cộng tác">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--
+            Thanh công cụ tối giản: chỉ đủ để kết nối, tạo phòng, chọn màu/độ dày.
+            KHÔNG phải danh sách phòng qua UDP Discovery, không phải panel Chat, không
+            phải bảng điều khiển Owner (Kick/Ban/Lock) — những phần đó nằm ngoài phạm
+            vi của bản canvas renderer này, xem README.md.
+        -->
+        <Grid Grid.Row="0" Background="{ThemeResource LayerFillColorDefaultBrush}" Padding="12,10">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBox x:Name="HostBox" PlaceholderText="IP máy chủ" Width="120" Text="127.0.0.1" />
+                <TextBox x:Name="PortBox" PlaceholderText="Port" Width="60" Text="11000" />
+                <TextBox x:Name="NameBox" PlaceholderText="Tên hiển thị" Width="130" Text="Khách" />
+                <TextBox x:Name="RoomBox" PlaceholderText="Tên phòng mới" Width="150" Text="Phòng của tôi" />
+                <Button x:Name="ConnectButton" Content="Kết nối &amp; tạo phòng" Click="ConnectButton_Click" />
+
+                <Border Width="1" Margin="4,2" Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+
+                <ColorPicker
+                    x:Name="ColorPickerControl"
+                    ColorChanged="ColorPickerControl_ColorChanged"
+                    IsMoreButtonVisible="False"
+                    IsColorSliderVisible="False"
+                    IsColorChannelTextInputVisible="False"
+                    IsAlphaEnabled="False" />
+
+                <TextBlock Text="Độ dày:" VerticalAlignment="Center" />
+                <Slider
+                    x:Name="ThicknessSlider"
+                    Minimum="1" Maximum="24" Value="4" Width="110"
+                    ValueChanged="ThicknessSlider_ValueChanged" />
+
+                <TextBlock
+                    x:Name="StatusText"
+                    Text="Chưa kết nối"
+                    VerticalAlignment="Center"
+                    Margin="12,0,0,0"
+                    Opacity="0.7" />
+            </StackPanel>
+        </Grid>
+
+        <canvas:CollaborativeCanvasControl x:Name="BoardControl" Grid.Row="1" />
+    </Grid>
+</Window>
