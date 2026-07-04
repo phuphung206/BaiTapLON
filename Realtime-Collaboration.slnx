@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CanvasClient/CanvasClient.csproj" />
+  <Project Path="CanvasServer/CanvasServer.csproj" />
+</Solution>
